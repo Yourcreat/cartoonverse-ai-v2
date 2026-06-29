@@ -28,7 +28,17 @@ bot.onText(/\/help/, (msg) => {
 app.get("/", (req, res) => {
   res.send("✅ CartoonVerse AI Bot Running");
 });
+bot.onText(/\/story (.+)/, async (msg, match) => {
+  const chatId = msg.chat.id;
+  const topic = match[1];
 
+  await bot.sendMessage(chatId, "⏳ Generating story...");
+
+  await bot.sendMessage(
+    chatId,
+    `⚽ Story Topic: ${topic}\n\n✅ Test successful!\nGemini AI will be connected in the next step.`
+  );
+});
 app.listen(PORT, () => {
   console.log("🚀 Server Started");
 });
