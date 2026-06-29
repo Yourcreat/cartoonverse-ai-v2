@@ -15,34 +15,23 @@ const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, {
   polling: true,
 });
 
-bot.onText(/\/start/, (msg) => {
-  bot.sendMessage(
-    msg.chat.id,
-    "🎬 Welcome to CartoonVerse AI V2!\n\nUse:\n/story Football Hero"
-  );
-});
-
-bot.onText(/\/help/, (msg) => {
-  bot.sendMessage(
-    msg.chat.id,
-    "Commands:\n\n/story\n/movie\n/image\n/video"
-  );
-});
-
-app.get("/", (req, res) => {
-  res.send("✅ CartoonVerse AI Bot Running");
-});
 bot.onText(/\/story (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const topic = match[1];
 
-  await bot.sendMessage(chatId, "⏳ Generating story...");
+  await bot.sendMessage(chatId, "⏳ Creating your story...");
 
-  await bot.sendMessage(
-    chatId,
-    `⚽ Story Topic: ${topic}\n\n✅ Test successful!\nGemini AI will be connected in the next step.`
-  );
-});
-app.listen(PORT, () => {
-  console.log("🚀 Server Started");
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `Write a cinematic football story about "${topic}".
+Make it engaging, emotional, and suitable for a 5–10 minute YouTube cartoon video.`,
+    });
+
+    await bot.sendMessage(chatId, response.text);
+
+  } catch (err) {
+    console.error(err);
+    await bot.sendMessage(chatId, "❌ Gemini AI Error.");
+  }
 });
