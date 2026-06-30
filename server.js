@@ -169,6 +169,8 @@ bot.onText(/\/image (.+)/, async (msg, match) => {
 
   const chatId = msg.chat.id;
   const topic = match[1];
+  console.log("IMAGE COMMAND RECEIVED");
+await bot.sendMessage(chatId, "✅ Image command detected");
 
   await bot.sendMessage(chatId, "🎨 Creating Image Prompts...");
 
