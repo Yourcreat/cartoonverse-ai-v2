@@ -39,11 +39,12 @@ Commands
 
 /story Football Hero
 /movie Football Hero
+/image Football Hero
+/video Football Hero
 /help`
   );
 
 });
-
 // HELP
 bot.onText(/\/help/, async (msg) => {
 
@@ -53,15 +54,18 @@ bot.onText(/\/help/, async (msg) => {
 
 /story Topic
 /movie Topic
+/image Topic
+/video Topic
 
-Example:
+Examples:
 
 /story Football Hero
-/movie Football Hero`
+/movie Football Hero
+/image Football Hero
+/video Football Hero`
   );
 
 });
-
 // STORY
 bot.onText(/\/story (.+)/, async (msg, match) => {
 
