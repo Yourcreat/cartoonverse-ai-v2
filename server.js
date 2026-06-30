@@ -241,6 +241,8 @@ bot.onText(/\/video (.+)/, async (msg, match) => {
 
   const chatId = msg.chat.id;
   const topic = match[1];
+  console.log("VIDEO COMMAND RECEIVED");
+await bot.sendMessage(chatId, "✅ Video command detected");
 
   await bot.sendMessage(chatId, "🎥 Creating Video Prompts...");
 
