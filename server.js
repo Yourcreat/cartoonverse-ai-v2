@@ -330,6 +330,54 @@ Return only titles.
   }
 
 });
+// THUMBNAIL
+bot.onText(/\/thumbnail (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🖼 Creating Thumbnail Prompt...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create ONE professional YouTube thumbnail prompt.
+
+Topic:
+${topic}
+
+Requirements:
+
+- Pixar 3D style
+- Ultra realistic lighting
+- Cinematic composition
+- Bright vibrant colors
+- Emotional facial expression
+- High CTR
+- 16:9 aspect ratio
+- Ultra detailed
+- 8K quality
+
+Return only the thumbnail prompt.
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(
+      chatId,
+      "❌ Thumbnail Error:\n" + (err.message || JSON.stringify(err))
+    );
+
+  }
+
+});
 // Home Page
 app.get("/", (req, res) => {
   res.send("✅ CartoonVerse AI Running");
