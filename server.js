@@ -174,3 +174,73 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log("🚀 Server Started");
 });
+// IMAGE
+bot.onText(/\/image (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🎨 Creating Image Prompts...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create a complete Pixar-style character and image package.
+
+Topic:
+${topic}
+
+Return exactly in this format:
+
+# Main Character
+
+# Character Sheet
+
+Age:
+Hair:
+Face:
+Eyes:
+Body:
+Clothes:
+Shoes:
+
+# Scene 1 Image Prompt
+
+# Scene 2 Image Prompt
+
+# Scene 3 Image Prompt
+
+# Scene 4 Image Prompt
+
+# Scene 5 Image Prompt
+
+# Scene 6 Image Prompt
+
+# Scene 7 Image Prompt
+
+# Scene 8 Image Prompt
+
+# Scene 9 Image Prompt
+
+# Scene 10 Image Prompt
+
+Every prompt must be cinematic, Pixar 3D, ultra detailed, consistent character design.
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(
+      chatId,
+      "❌ Image Error:\n" + (err.message || JSON.stringify(err))
+    );
+
+  }
+
+});
