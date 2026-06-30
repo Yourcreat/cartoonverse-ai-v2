@@ -60,3 +60,50 @@ Example:
   );
 
 });
+// STORY
+bot.onText(/\/story (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "⏳ Creating Story...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Write a professional cinematic story.
+
+Topic:
+${topic}
+
+Requirements:
+
+- Powerful Title
+- Hook
+- Story
+- Ending
+- Moral
+
+Length: 1000 words.
+Language: English.
+`
+    });
+
+    const story = response.text;
+
+    await sendLongMessage(chatId, story);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(
+      chatId,
+      "❌ Error:\n" + (err.message || JSON.stringify(err))
+    );
+
+  }
+
+});
