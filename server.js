@@ -244,3 +244,51 @@ Every prompt must be cinematic, Pixar 3D, ultra detailed, consistent character d
   }
 
 });
+// VIDEO
+bot.onText(/\/video (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🎥 Creating Video Prompts...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create 10 cinematic AI video prompts.
+
+Topic:
+${topic}
+
+Requirements:
+
+- Scene 1 to Scene 10
+- Pixar 3D style
+- Cinematic camera
+- Character consistency
+- Lighting
+- Environment
+- Motion
+- 8-second prompt for each scene
+- Ready for Veo AI, LTX Studio and Hailuo AI
+
+Return only the prompts.
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(
+      chatId,
+      "❌ Video Error:\n" + (err.message || JSON.stringify(err))
+    );
+
+  }
+
+});
