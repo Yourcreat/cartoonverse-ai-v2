@@ -19,7 +19,7 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 
-// Send Long Message
+// Long Message Function
 async function sendLongMessage(chatId, text) {
   const MAX_LENGTH = 4000;
 
@@ -27,6 +27,7 @@ async function sendLongMessage(chatId, text) {
     await bot.sendMessage(chatId, text.substring(i, i + MAX_LENGTH));
   }
 }
+
 // START
 bot.onText(/\/start/, async (msg) => {
 
@@ -48,7 +49,7 @@ bot.onText(/\/help/, async (msg) => {
 
   await bot.sendMessage(
     msg.chat.id,
-`📖 Available Commands
+`📖 Commands
 
 /story Topic
 /movie Topic
@@ -60,6 +61,7 @@ Example:
   );
 
 });
+
 // STORY
 bot.onText(/\/story (.+)/, async (msg, match) => {
 
@@ -86,7 +88,7 @@ Requirements:
 - Ending
 - Moral
 
-Length: 1000 words.
+Length: 800-1000 words.
 Language: English.
 `
     });
@@ -101,46 +103,9 @@ Language: English.
 
     await bot.sendMessage(
       chatId,
-      "❌ Error:\n" + (err.message || JSON.stringify(err))
+      "❌ Story Error:\n" + (err.message || JSON.stringify(err))
     );
 
   }
 
-});
-// MOVIE
-bot.onText(/\/movie (.+)/, async (msg, match) => {
-
-  console.log("MOVIE COMMAND RECEIVED");
-
-  const chatId = msg.chat.id;
-bot.onText(/\/movie (.+)/, async (msg, match) => {
-
-  const chatId = msg.chat.id;
-  const topic = match[1];
-
-  await bot.sendMessage(chatId, "✅ /movie command detected");
-  await bot.sendMessage(chatId, "Topic: " + topic);
-
-});
-
-    await sendLongMessage(chatId, response.text);
-
-  } catch (err) {
-
-    console.error(err);
-
-    await bot.sendMessage(
-      chatId,
-      "❌ Movie Error:\n" + (err.message || JSON.stringify(err))
-    );
-
-  }
-
-});
-app.get("/", (req, res) => {
-  res.send("✅ CartoonVerse AI Running");
-});
-
-app.listen(PORT, () => {
-  console.log("🚀 Server Started");
 });
