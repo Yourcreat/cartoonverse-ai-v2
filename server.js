@@ -113,47 +113,10 @@ bot.onText(/\/movie (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const topic = match[1];
 
-  await bot.sendMessage(chatId, "🎬 Creating Movie Package...");
+  await bot.sendMessage(chatId, "✅ /movie command detected");
+  await bot.sendMessage(chatId, "Topic: " + topic);
 
-  try {
-
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: `
-Create a YouTube cartoon movie package.
-
-Topic:
-${topic}
-
-Return in this format only:
-
-# Movie Title
-
-# Main Character
-
-# Story Summary
-
-# Scene 1
-
-# Scene 2
-
-# Scene 3
-
-# Scene 4
-
-# Scene 5
-
-# Scene 6
-
-# Scene 7
-
-# Scene 8
-
-# Scene 9
-
-# Scene 10
-`
-    });
+});
 
     await sendLongMessage(chatId, response.text);
 
