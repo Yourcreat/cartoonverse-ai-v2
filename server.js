@@ -286,6 +286,50 @@ Return only the prompts.
   }
 
 });
+// TITLE
+bot.onText(/\/title (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🔥 Creating Viral Titles...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Generate 20 viral YouTube titles.
+
+Topic:
+${topic}
+
+Requirements:
+
+- Very Clickable
+- Emotional
+- Curiosity
+- YouTube SEO Friendly
+- Number them 1 to 20
+
+Return only titles.
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(
+      chatId,
+      "❌ Title Error:\n" + (err.message || JSON.stringify(err))
+    );
+
+  }
+
+});
 // Home Page
 app.get("/", (req, res) => {
   res.send("✅ CartoonVerse AI Running");
