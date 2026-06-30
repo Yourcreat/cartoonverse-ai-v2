@@ -110,6 +110,11 @@ Language: English.
 // MOVIE
 bot.onText(/\/movie (.+)/, async (msg, match) => {
 
+  console.log("MOVIE COMMAND RECEIVED");
+
+  const chatId = msg.chat.id;
+bot.onText(/\/movie (.+)/, async (msg, match) => {
+
   const chatId = msg.chat.id;
   const topic = match[1];
 
