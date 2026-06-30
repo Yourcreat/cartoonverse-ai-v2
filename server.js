@@ -164,16 +164,6 @@ Return in this format:
   }
 
 });
-
-// Home Page
-app.get("/", (req, res) => {
-  res.send("✅ CartoonVerse AI Running");
-});
-
-// Start Server
-app.listen(PORT, () => {
-  console.log("🚀 Server Started");
-});
 // IMAGE
 bot.onText(/\/image (.+)/, async (msg, match) => {
 
@@ -291,4 +281,13 @@ Return only the prompts.
 
   }
 
+});
+// Home Page
+app.get("/", (req, res) => {
+  res.send("✅ CartoonVerse AI Running");
+});
+
+// Start Server
+app.listen(PORT, () => {
+  console.log("🚀 Server Started");
 });
