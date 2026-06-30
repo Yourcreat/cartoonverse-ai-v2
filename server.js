@@ -109,3 +109,68 @@ Language: English.
   }
 
 });
+// MOVIE
+bot.onText(/\/movie (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🎬 Creating Movie Package...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create a professional YouTube cartoon movie package.
+
+Topic:
+${topic}
+
+Return in this format:
+
+# Movie Title
+
+# Main Character
+
+# Story Summary
+
+# Scene 1
+# Scene 2
+# Scene 3
+# Scene 4
+# Scene 5
+# Scene 6
+# Scene 7
+# Scene 8
+# Scene 9
+# Scene 10
+`
+    });
+
+    const movie = response.text;
+
+    await sendLongMessage(chatId, movie);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(
+      chatId,
+      "❌ Movie Error:\n" + (err.message || JSON.stringify(err))
+    );
+
+  }
+
+});
+
+// Home Page
+app.get("/", (req, res) => {
+  res.send("✅ CartoonVerse AI Running");
+});
+
+// Start Server
+app.listen(PORT, () => {
+  console.log("🚀 Server Started");
+});
