@@ -94,3 +94,108 @@ bot.onText(/\/help/, async (msg) => {
   );
 
 });
+// =========================
+// STORY
+// =========================
+
+bot.onText(/\/story (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "⏳ Creating Story...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Write a professional cinematic story.
+
+Topic:
+${topic}
+
+Requirements:
+
+- Powerful Title
+- Hook
+- Story
+- Ending
+- Moral
+
+Length: 800-1000 words.
+Language: English.
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(
+      chatId,
+      "❌ Story Error:\n" + (err.message || JSON.stringify(err))
+    );
+
+  }
+
+});
+
+// =========================
+// MOVIE
+// =========================
+
+bot.onText(/\/movie (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🎬 Creating Movie Package...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create a professional YouTube cartoon movie package.
+
+Topic:
+${topic}
+
+Return in this format:
+
+# Movie Title
+
+# Main Character
+
+# Story Summary
+
+# Scene 1
+# Scene 2
+# Scene 3
+# Scene 4
+# Scene 5
+# Scene 6
+# Scene 7
+# Scene 8
+# Scene 9
+# Scene 10
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(
+      chatId,
+      "❌ Movie Error:\n" + (err.message || JSON.stringify(err))
+    );
+
+  }
+
+});
