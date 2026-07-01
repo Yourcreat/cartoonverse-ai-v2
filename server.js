@@ -291,3 +291,100 @@ Requirements:
   }
 
 });
+// =======================
+// CREATE
+// =======================
+
+bot.onText(/\/create (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🚀 Creating Complete AI Package...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create a complete YouTube cartoon package.
+
+Topic:
+${topic}
+
+Include:
+
+# STORY
+
+# CHARACTER SHEET
+
+# IMAGE PROMPTS (10)
+
+# VIDEO PROMPTS (10)
+
+# MOVIE SCRIPT (10 SCENES)
+
+# YOUTUBE TITLE
+
+# YOUTUBE DESCRIPTION
+
+# TAGS
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(chatId, "❌ Create Error");
+  }
+
+});
+
+// =======================
+// TITLE
+// =======================
+
+bot.onText(/\/title (.+)/, async (msg, match) => {
+
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: `Generate 20 viral YouTube titles about ${match[1]}`
+  });
+
+  await sendLongMessage(msg.chat.id, response.text);
+
+});
+
+// =======================
+// THUMBNAIL
+// =======================
+
+bot.onText(/\/thumbnail (.+)/, async (msg, match) => {
+
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: `Create one ultra cinematic Pixar 3D thumbnail prompt for ${match[1]}`
+  });
+
+  await sendLongMessage(msg.chat.id, response.text);
+
+});
+
+// =======================
+// HOME
+// =======================
+
+app.get("/", (req, res) => {
+  res.send("✅ CartoonVerse AI V6 Running");
+});
+
+// =======================
+// SERVER
+// =======================
+
+app.listen(PORT, () => {
+  console.log("🚀 CartoonVerse AI V6 Started");
+});
