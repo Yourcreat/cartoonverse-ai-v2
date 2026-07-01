@@ -3,7 +3,11 @@ require("dotenv").config();
 const express = require("express");
 const TelegramBot = require("node-telegram-bot-api");
 const { GoogleGenAI } = require("@google/genai");
+const fal = require("@fal-ai/client");
 
+fal.config({
+  credentials: process.env.FAL_KEY
+});
 const app = express();
 app.use(express.json());
 
