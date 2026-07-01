@@ -341,6 +341,48 @@ Scene 7
 Scene 8
 Scene 9
 Scene 10
+# VIDEO PROMPTS
+
+Scene 1
+Scene 2
+Scene 3
+Scene 4
+Scene 5
+Scene 6
+Scene 7
+Scene 8
+Scene 9
+Scene 10
+
+# MOVIE SCRIPT
+
+Scene 1
+Scene 2
+Scene 3
+Scene 4
+Scene 5
+Scene 6
+Scene 7
+Scene 8
+Scene 9
+Scene 10
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(
+      chatId,
+      "❌ Create Error:\n" + (err.message || JSON.stringify(err))
+    );
+
+  }
+
+});
 // TITLE
 bot.onText(/\/title (.+)/, async (msg, match) => {
 
