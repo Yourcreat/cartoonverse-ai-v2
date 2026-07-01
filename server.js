@@ -199,3 +199,113 @@ Return in this format:
   }
 
 });
+// =========================
+// IMAGE
+// =========================
+
+bot.onText(/\/image (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🎨 Creating Image Prompts...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create a complete Pixar-style character and image package.
+
+Topic:
+${topic}
+
+Return exactly in this format:
+
+# Main Character
+
+# Character Sheet
+
+Name:
+Age:
+Hair:
+Face:
+Eyes:
+Body:
+Clothes:
+Shoes:
+
+# Scene 1 Image Prompt
+# Scene 2 Image Prompt
+# Scene 3 Image Prompt
+# Scene 4 Image Prompt
+# Scene 5 Image Prompt
+# Scene 6 Image Prompt
+# Scene 7 Image Prompt
+# Scene 8 Image Prompt
+# Scene 9 Image Prompt
+# Scene 10 Image Prompt
+
+Every prompt must be cinematic, Pixar 3D, ultra detailed, consistent character design.
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(chatId, "❌ Image Error:\n" + (err.message || JSON.stringify(err)));
+
+  }
+
+});
+
+// =========================
+// VIDEO
+// =========================
+
+bot.onText(/\/video (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🎥 Creating Video Prompts...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create 10 cinematic AI video prompts.
+
+Topic:
+${topic}
+
+Requirements:
+
+- Scene 1 to Scene 10
+- Pixar 3D style
+- Cinematic camera
+- Character consistency
+- Lighting
+- Environment
+- Motion
+- Ready for Veo AI, LTX Studio and Hailuo AI
+
+Return only the prompts.
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(chatId, "❌ Video Error:\n" + (err.message || JSON.stringify(err)));
+
+  }
+
+});
