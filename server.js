@@ -290,6 +290,57 @@ Return only the prompts.
   }
 
 });
+// CREATE
+bot.onText(/\/create (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🚀 Creating Complete AI Package...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create a complete YouTube cartoon package.
+
+Topic:
+${topic}
+
+Return exactly in this order:
+
+# STORY
+
+- Title
+- Hook
+- Story
+- Ending
+- Moral
+
+# CHARACTER SHEET
+
+- Name
+- Age
+- Hair
+- Face
+- Eyes
+- Body
+- Clothes
+- Shoes
+
+# IMAGE PROMPTS
+
+Scene 1
+Scene 2
+Scene 3
+Scene 4
+Scene 5
+Scene 6
+Scene 7
+Scene 8
+Scene 9
+Scene 10
 // TITLE
 bot.onText(/\/title (.+)/, async (msg, match) => {
 
