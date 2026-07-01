@@ -132,7 +132,13 @@ Language: English.
 `
     });
 
-    await sendLongMessage(chatId, response.text);
+    await bot.sendPhoto(
+  chatId,
+  result.data.images[0].url,
+  {
+    caption: "✅ Image Generated Successfully"
+  }
+);
 
   } catch (err) {
 
