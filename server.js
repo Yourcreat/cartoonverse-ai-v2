@@ -216,7 +216,21 @@ bot.onText(/\/image (.+)/, async (msg, match) => {
 
   try {
 
-    const response = await ai.models.generateContent({
+    const result = await fal.subscribe("fal-ai/flux/schnell", {
+  input: {
+    prompt: `
+${topic}
+
+Pixar 3D,
+Ultra detailed,
+Cinematic lighting,
+Highly detailed,
+Professional animation,
+8K quality
+`,
+    image_size: "landscape_16_9"
+  }
+});
       model: "gemini-2.5-flash",
       contents: `
 Create a complete Pixar-style character and image package.
