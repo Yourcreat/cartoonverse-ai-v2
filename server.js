@@ -309,3 +309,139 @@ Return only the prompts.
   }
 
 });
+// =========================
+// CREATE
+// =========================
+
+bot.onText(/\/create (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🚀 Creating Complete AI Package...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create a complete YouTube cartoon package.
+
+Topic:
+${topic}
+
+Include:
+
+# STORY
+
+# CHARACTER SHEET
+
+# IMAGE PROMPTS (10)
+
+# VIDEO PROMPTS (10)
+
+# MOVIE SCRIPT (10 SCENES)
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(chatId, "❌ Create Error:\n" + (err.message || JSON.stringify(err)));
+
+  }
+
+});
+
+// =========================
+// TITLE
+// =========================
+
+bot.onText(/\/title (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🔥 Creating Viral Titles...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Generate 20 viral YouTube titles about:
+
+${topic}
+
+Only return numbered titles.
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(chatId, "❌ Title Error:\n" + (err.message || JSON.stringify(err)));
+
+  }
+
+});
+
+// =========================
+// THUMBNAIL
+// =========================
+
+bot.onText(/\/thumbnail (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const topic = match[1];
+
+  await bot.sendMessage(chatId, "🖼 Creating Thumbnail Prompt...");
+
+  try {
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create one ultra cinematic Pixar style YouTube thumbnail prompt.
+
+Topic:
+
+${topic}
+
+Return only the prompt.
+`
+    });
+
+    await sendLongMessage(chatId, response.text);
+
+  } catch (err) {
+
+    console.error(err);
+
+    await bot.sendMessage(chatId, "❌ Thumbnail Error:\n" + (err.message || JSON.stringify(err)));
+
+  }
+
+});
+
+// =========================
+// HOME PAGE
+// =========================
+
+app.get("/", (req, res) => {
+  res.send("✅ CartoonVerse AI V5 Running");
+});
+
+// =========================
+// START SERVER
+// =========================
+
+app.listen(PORT, () => {
+  console.log("🚀 CartoonVerse AI Started Successfully");
+});
