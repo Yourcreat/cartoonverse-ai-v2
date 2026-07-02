@@ -384,6 +384,26 @@ Return:
 
 });
 // =======================
+// OPEN PROJECT
+// =======================
+
+bot.onText(/\/open (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const projectName = match[1];
+
+  const project = loadProject(projectName);
+
+  if (!project) {
+    return bot.sendMessage(chatId, "❌ Project not found.");
+  }
+
+  await bot.sendMessage(chatId, `📂 Project: ${projectName}`);
+
+  await sendLongMessage(chatId, project.content);
+
+});
+// =======================
 // CREATE
 // =======================
 
