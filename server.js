@@ -404,6 +404,46 @@ bot.onText(/\/open (.+)/, async (msg, match) => {
 
 });
 // =======================
+// LIST PROJECTS
+// =======================
+
+bot.onText(/\/list/, async (msg) => {
+
+  const chatId = msg.chat.id;
+
+  const projects = listProjects();
+
+  if (projects.length === 0) {
+    return bot.sendMessage(chatId, "📂 No projects found.");
+  }
+
+  await bot.sendMessage(
+    chatId,
+    "📂 Saved Projects:\n\n" + projects.join("\n")
+  );
+
+});
+// =======================
+// DELETE PROJECT
+// =======================
+
+bot.onText(/\/delete (.+)/, async (msg, match) => {
+
+  const chatId = msg.chat.id;
+  const projectName = match[1];
+
+  const file = path.join(PROJECT_FOLDER, `${projectName}.json`);
+
+  if (!fs.existsSync(file)) {
+    return bot.sendMessage(chatId, "❌ Project not found.");
+  }
+
+  fs.unlinkSync(file);
+
+  await bot.sendMessage(chatId, `🗑 Project "${projectName}" deleted.`);
+
+});
+// =======================
 // CREATE
 // =======================
 
