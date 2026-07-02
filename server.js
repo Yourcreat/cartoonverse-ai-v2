@@ -367,11 +367,12 @@ Return:
 `
     });
 
-    const projectData = {
-      topic,
-      createdAt: new Date().toISOString(),
-      content: response.text
-    };
+  const projectData = {
+  topic,
+  createdAt: new Date().toISOString(),
+  content: response.text,
+  character: response.text
+};
 
     saveProject(topic, projectData);
 
