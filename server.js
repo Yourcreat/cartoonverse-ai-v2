@@ -65,6 +65,17 @@ function listProjects() {
     .map(file => file.replace(".json", ""));
 }
 // =======================
+// CHARACTER MEMORY
+// =======================
+
+function getCharacter(projectName) {
+  const project = loadProject(projectName);
+
+  if (!project) return null;
+
+  return project.character || null;
+}
+// =======================
 // START
 // =======================
 
