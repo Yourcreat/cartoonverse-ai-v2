@@ -230,6 +230,7 @@ bot.onText(/\/image (.+)/, async (msg, match) => {
   await bot.sendMessage(chatId, "🎨 Creating Image Prompts...");
 
   try {
+    const savedCharacter = getCharacter(topic);
 
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
