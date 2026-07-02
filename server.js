@@ -227,34 +227,40 @@ bot.onText(/\/image (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const topic = match[1];
 
-  await bot.sendMessage(chatId, "🎨 Generating AI Image...");
+  await bot.sendMessage(chatId, "🎨 Creating Image Prompts...");
 
   try {
 
-    const result = await fal.subscribe("fal-ai/flux-1/schnell", {
-      input: {
-        prompt: `
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: `
+Create 10 professional Pixar 3D image prompts.
+
+Topic:
 ${topic}
 
-Pixar 3D style,
-Ultra detailed,
-Cinematic lighting,
-Professional animation,
-Highly detailed,
-8K,
-Vibrant colors
-`,
-        image_size: "landscape_16_9"
-      }
+Return:
+
+# Character Sheet
+
+# Scene 1 Image Prompt
+
+# Scene 2 Image Prompt
+
+...
+
+# Scene 10 Image Prompt
+
+All prompts must have:
+- Same character
+- Pixar 3D
+- Cinematic lighting
+- Ultra detailed
+- 8K
+`
     });
 
-    await bot.sendPhoto(
-      chatId,
-      result.data.images[0].url,
-      {
-        caption: `✅ ${topic}`
-      }
-    );
+    await sendLongMessage(chatId, response.text);
 
   } catch (err) {
 
@@ -262,8 +268,7 @@ Vibrant colors
 
     await bot.sendMessage(
       chatId,
-      "❌ Image Error:\n" +
-      (err.message || JSON.stringify(err))
+      "❌ Image Error:\n" + (err.message || JSON.stringify(err))
     );
 
   }
