@@ -4,17 +4,11 @@ const path = require("path");
 const express = require("express");
 const TelegramBot = require("node-telegram-bot-api");
 const { GoogleGenAI } = require("@google/genai");
-const { fal } = require("@fal-ai/client");
 
 const app = express();
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-
-// Configure FAL
-fal.config({
-  credentials: process.env.FAL_KEY,
-});
 
 // Telegram Bot
 const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, {
