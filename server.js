@@ -237,8 +237,11 @@ bot.onText(/\/image (.+)/, async (msg, match) => {
       contents: `
 Create 10 professional Pixar 3D image prompts.
 
-Topic:
+Project:
 ${topic}
+
+Previously Saved Character:
+${savedCharacter || "Create a new consistent character."}
 
 Return:
 
@@ -252,8 +255,8 @@ Return:
 
 # Scene 10 Image Prompt
 
-All prompts must have:
-- Same character
+Requirements:
+- Use the SAME character in every scene.
 - Pixar 3D
 - Cinematic lighting
 - Ultra detailed
