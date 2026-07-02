@@ -259,7 +259,6 @@ All prompts must have:
 - Ultra detailed
 - 8K
 `
-    });
 
     await sendLongMessage(chatId, response.text);
 
